@@ -1,0 +1,55 @@
+<h2 mat-dialog-title>{{ titulo }}</h2>
+<mat-dialog-content>
+  <form id="FormularioInfoAdministrador" [formGroup]="myForm">
+    <div class="flex flex-col">
+      <mat-form-field>
+        <mat-label>Id Administrador</mat-label>
+        <input formControlName="idAdministrador" type="text" matInput readonly />
+      </mat-form-field>
+      
+      <div class="md:flex justify-between">
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="nombre" type="text" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Primer Apellido</mat-label>
+          <input formControlName="apellido1" type="text" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Segundo Apellido</mat-label>
+          <input formControlName="apellido2" type="text" matInput readonly />
+        </mat-form-field>
+      </div>
+      
+      <div class="md:flex justify-between">
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Teléfono</mat-label>
+          <input formControlName="telefono" type="text" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Celular</mat-label>
+          <input formControlName="celular" type="text" matInput readonly />
+        </mat-form-field>
+      </div>
+      
+      <mat-form-field class="w-full md:w-fit">
+        <mat-label>Correo</mat-label>
+        <input formControlName="correo" type="text" matInput readonly />
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Dirección</mat-label>
+        <textarea formControlName="direccion" matInput readonly></textarea>
+      </mat-form-field>
+    </div>
+    <input type="hidden" formControlName="id" />
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex justify-end">
+  <button mat-raised-button color="primary" (click)="onCerrar()">
+    <mat-icon>close</mat-icon> 
+    Cerrar
+  </button>
+</mat-dialog-actions>

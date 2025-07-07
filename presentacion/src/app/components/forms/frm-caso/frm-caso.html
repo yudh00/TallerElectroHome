@@ -1,0 +1,111 @@
+<h2 mat-dialog-title>Formulario Caso</h2>
+<mat-dialog-content>
+  <form id="FormularioCaso" [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="flex flex-col">
+
+      <!-- Cliente -->
+      <mat-form-field>
+        <mat-label>Cliente*</mat-label>
+        <mat-select formControlName="idCliente">
+          <mat-option value="">Seleccione un cliente</mat-option>
+          <mat-option *ngFor="let cliente of clientes" [value]="cliente.idCliente">
+            {{cliente.nombre}} {{cliente.apellido1}} - {{cliente.idCliente}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="md:flex justify-between">
+        <!-- Técnico -->
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Técnico*</mat-label>
+          <mat-select formControlName="idTecnico">
+            <mat-option value="">Seleccione un técnico</mat-option>
+            <mat-option *ngFor="let tecnico of tecnicos" [value]="tecnico.idTecnico">
+              {{tecnico.nombre}} {{tecnico.apellido1}} - {{tecnico.idTecnico}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <!-- Artefacto -->
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Artefacto*</mat-label>
+          <mat-select formControlName="idArtefacto">
+            <mat-option value="">Seleccione un artefacto</mat-option>
+            <mat-option *ngFor="let artefacto of artefactos" [value]="artefacto.id">
+              {{artefacto.marca}} {{artefacto.modelo}} - {{artefacto.serie}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <!-- Validaciones de campos obligatorios -->
+      @if(F['idCliente'].invalid && F['idCliente'].touched) {
+        @if(F['idCliente'].errors!['required']) {
+          <small class="text-red-700">El cliente es obligatorio</small>
+        }
+      }
+
+      @if(F['idTecnico'].invalid && F['idTecnico'].touched) {
+        @if(F['idTecnico'].errors!['required']) {
+          <small class="text-red-700">El técnico es obligatorio</small>
+        }
+      }
+
+      @if(F['idArtefacto'].invalid && F['idArtefacto'].touched) {
+        @if(F['idArtefacto'].errors!['required']) {
+          <small class="text-red-700">El artefacto es obligatorio</small>
+        }
+      }
+
+      <div class="md:flex justify-between">
+        <!-- Fecha de Entrada -->
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Fecha de Entrada*</mat-label>
+          <input matInput [matDatepicker]="pickerEntrada" formControlName="fechaEntrada">
+          <mat-datepicker-toggle matIconSuffix [for]="pickerEntrada"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEntrada></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Fecha de Salida -->
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Fecha de Salida</mat-label>
+          <input matInput [matDatepicker]="pickerSalida" formControlName="fechaSalida">
+          <mat-datepicker-toggle matIconSuffix [for]="pickerSalida"></mat-datepicker-toggle>
+          <mat-datepicker #pickerSalida></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      @if(F['fechaEntrada'].invalid && F['fechaEntrada'].touched) {
+        @if(F['fechaEntrada'].errors!['required']) {
+          <small class="text-red-700">La fecha de entrada es obligatoria</small>
+        }
+      }
+
+      <!-- Descripción -->
+      <mat-form-field>
+        <mat-label>Descripción*</mat-label>
+        <textarea matInput formControlName="descripcion" placeholder="Describa el problema o motivo del caso"></textarea>
+      </mat-form-field>
+
+      @if(F['descripcion'].invalid && F['descripcion'].touched) {
+        @if(F['descripcion'].errors!['required']) {
+          <small class="text-red-700">La descripción es obligatoria</small>
+        }
+        @if(F['descripcion'].errors!['maxlength']) {
+          <small class="text-red-700">La descripción no puede exceder 255 caracteres</small>
+        }
+      }
+
+    </div>
+    <input type="hidden" formControlName="id" />
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="submit" form="FormularioCaso" mat-button>
+    <mat-icon>save</mat-icon> Guardar
+  </button>
+  <button mat-button [mat-dialog-close]="false">
+    <mat-icon>cancel</mat-icon> Cerrar
+  </button>
+</mat-dialog-actions>

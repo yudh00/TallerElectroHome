@@ -1,0 +1,80 @@
+<h2 mat-dialog-title>Formulario Artefacto</h2>
+
+<mat-dialog-content>
+  <form id="FormularioArtefacto" [formGroup]="form" (ngSubmit)="guardar()">
+    <div class="flex flex-col">
+
+      <mat-form-field class="w-full">
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="idCliente">
+          <mat-option *ngFor="let cli of clientes" [value]="cli.idCliente">
+            {{ cli.nombre }} {{ cli.apellido1 }} {{ cli.apellido2 }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="md:flex justify-between">
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Serie</mat-label>
+          <input matInput formControlName="serie" />
+        </mat-form-field>
+
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Marca</mat-label>
+          <input matInput formControlName="marca" />
+        </mat-form-field>
+
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Modelo</mat-label>
+          <input matInput formControlName="modelo" />
+        </mat-form-field>
+      </div>
+
+      @if (F['serie'].invalid && F['serie'].touched) {
+        @if (F['serie'].errors!['required']) {
+          <small class="text-red-700">La serie es obligatoria</small>
+        }
+        @if (F['serie'].errors!['maxlength']) {
+          <small class="text-red-700">Máximo 45 caracteres</small>
+        }
+      }
+
+      <mat-form-field class="w-full md:w-fit">
+        <mat-label>Categoría</mat-label>
+        <input matInput formControlName="categoria" />
+      </mat-form-field>
+
+      @if (F['categoria'].invalid && F['categoria'].touched) {
+        @if (F['categoria'].errors!['required']) {
+          <small class="text-red-700">Categoría es obligatoria</small>
+        }
+      }
+
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcion" rows="3"></textarea>
+      </mat-form-field>
+
+      @if (F['descripcion'].invalid && F['descripcion'].touched) {
+        @if (F['descripcion'].errors!['required']) {
+          <small class="text-red-700">Descripción es obligatoria</small>
+        }
+        @if (F['descripcion'].errors!['maxlength']) {
+          <small class="text-red-700">Máximo 200 caracteres</small>
+        }
+      }
+
+      <input type="hidden" formControlName="id" />
+
+    </div>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="submit" form="FormularioArtefacto" mat-button>
+    <mat-icon>save</mat-icon> Guardar
+  </button>
+  <button mat-button [mat-dialog-close]="false">
+    <mat-icon>cancel</mat-icon> Cerrar
+  </button>
+</mat-dialog-actions>

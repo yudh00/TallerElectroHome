@@ -1,0 +1,103 @@
+<h2 mat-dialog-title>{{ titulo }}</h2>
+<mat-dialog-content>
+  <form id="FormularioTecnico" [formGroup]="myForm" (ngSubmit)="onGuardar();">
+    <div class="flex flex-col">
+
+      <mat-form-field>
+        <mat-label>ID Técnico</mat-label>
+        <input formControlName="idTecnico" type="text" matInput maxlength="15" />
+        <mat-error *ngIf="F['idTecnico'].invalid && F['idTecnico'].touched">
+          <span *ngIf="F['idTecnico'].errors?.['required']">ID de técnico es obligatorio</span>
+          <span *ngIf="F['idTecnico'].errors?.['minlength']">Mínimo 1 caracter</span>
+          <span *ngIf="F['idTecnico'].errors?.['maxlength']">Máximo 15 caracteres</span>
+          <span *ngIf="F['idTecnico'].errors?.['pattern']">Solo se permiten letras y números</span>
+        </mat-error>
+      </mat-form-field>
+
+      <div class="md:flex justify-between">
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="nombre" type="text" matInput maxlength="30" />
+          <mat-error *ngIf="F['nombre'].invalid && F['nombre'].touched">
+            <span *ngIf="F['nombre'].errors?.['required']">Nombre es obligatorio</span>
+            <span *ngIf="F['nombre'].errors?.['minlength']">Mínimo 2 caracteres</span>
+            <span *ngIf="F['nombre'].errors?.['maxlength']">Máximo 30 caracteres</span>
+            <span *ngIf="F['nombre'].errors?.['pattern']">Solo se permiten letras y espacios</span>
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Primer Apellido</mat-label>
+          <input formControlName="apellido1" type="text" matInput maxlength="30" />
+          <mat-error *ngIf="F['apellido1'].invalid && F['apellido1'].touched">
+            <span *ngIf="F['apellido1'].errors?.['required']">Primer apellido es obligatorio</span>
+            <span *ngIf="F['apellido1'].errors?.['minlength']">Mínimo 2 caracteres</span>
+            <span *ngIf="F['apellido1'].errors?.['maxlength']">Máximo 30 caracteres</span>
+            <span *ngIf="F['apellido1'].errors?.['pattern']">Solo se permiten letras y espacios</span>
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Segundo Apellido</mat-label>
+          <input formControlName="apellido2" type="text" matInput maxlength="30" />
+          <mat-error *ngIf="F['apellido2'].invalid && F['apellido2'].touched">
+            <span *ngIf="F['apellido2'].errors?.['required']">Segundo apellido es obligatorio</span>
+            <span *ngIf="F['apellido2'].errors?.['minlength']">Mínimo 2 caracteres</span>
+            <span *ngIf="F['apellido2'].errors?.['maxlength']">Máximo 30 caracteres</span>
+            <span *ngIf="F['apellido2'].errors?.['pattern']">Solo se permiten letras y espacios</span>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field class="w-full md:w-fit">
+        <mat-label>Teléfono</mat-label>
+        <input formControlName="telefono" type="tel" matInput maxlength="9" />
+        <mat-error *ngIf="F['telefono'].invalid && F['telefono'].touched">
+          <span *ngIf="F['telefono'].errors?.['required']">Teléfono es obligatorio</span>
+          <span *ngIf="F['telefono'].errors?.['minlength']">Mínimo 8 dígitos</span>
+          <span *ngIf="F['telefono'].errors?.['maxlength']">Máximo 9 dígitos</span>
+          <span *ngIf="F['telefono'].errors?.['pattern']">Solo se permiten números</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-full md:w-fit">
+        <mat-label>Celular (Opcional)</mat-label>
+        <input formControlName="celular" type="tel" matInput maxlength="9" />
+        <mat-error *ngIf="F['celular'].invalid && F['celular'].touched">
+          <span *ngIf="F['celular'].errors?.['minlength']">Mínimo 8 dígitos</span>
+          <span *ngIf="F['celular'].errors?.['maxlength']">Máximo 9 dígitos</span>
+          <span *ngIf="F['celular'].errors?.['pattern']">Solo se permiten números</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-full md:w-fit">
+        <mat-label>Correo Electrónico</mat-label>
+        <input formControlName="correo" type="email" matInput maxlength="100" />
+        <mat-error *ngIf="F['correo'].invalid && F['correo'].touched">
+          <span *ngIf="F['correo'].errors?.['required']">Correo electrónico es obligatorio</span>
+          <span *ngIf="F['correo'].errors?.['maxlength']">Máximo 100 caracteres</span>
+          <span *ngIf="F['correo'].errors?.['pattern']">Formato de correo inválido</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Dirección (Opcional)</mat-label>
+        <textarea formControlName="direccion" matInput maxlength="255"></textarea>
+        <mat-error *ngIf="F['direccion'].invalid && F['direccion'].touched">
+          <span *ngIf="F['direccion'].errors?.['maxlength']">Máximo 255 caracteres</span>
+        </mat-error>
+      </mat-form-field>
+
+    </div>
+    <input type="hidden" formControlName="id" />
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button type="submit" form="FormularioTecnico" mat-raised-button color="primary" [disabled]="myForm.invalid">
+    <mat-icon>save</mat-icon> Guardar
+  </button>
+  <button mat-button [mat-dialog-close]="false">
+    <mat-icon>cancel</mat-icon> Cerrar
+  </button>
+</mat-dialog-actions>

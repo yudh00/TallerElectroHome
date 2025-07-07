@@ -1,0 +1,14 @@
+/* Estilos específicos para InfoCliente */
+.mat-mdc-dialog-content {
+  max-height: 70vh;
+  overflow-y: auto;
+}
+
+.mat-mdc-form-field {
+  margin-bottom: 1rem;
+}
+
+.mat-mdc-form-field-infix input:read-only {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}

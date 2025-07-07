@@ -1,0 +1,32 @@
+/* Archivo CSS simplificado - usando principalmente Tailwind CSS */
+
+/* Solo estilos específicos que no se pueden lograr con Tailwind */
+.mat-mdc-dialog-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Spinner inline */
+.mat-mdc-progress-spinner {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Asegurar que los form-fields ocupen todo el ancho */
+.mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+/* Responsive para iconos en mobile */
+@media (max-width: 768px) {
+  .mat-mdc-dialog-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .mat-mdc-dialog-actions button {
+    width: 100%;
+  }
+}

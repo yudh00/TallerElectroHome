@@ -1,0 +1,29 @@
+.empresa {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem; 
+}
+
+.titulo {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.me-4 {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+[mat-icon-button] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}

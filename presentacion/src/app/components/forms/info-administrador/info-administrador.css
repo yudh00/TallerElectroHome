@@ -1,0 +1,15 @@
+/* Estilos específicos para el componente de información de administrador */
+
+/* Campos deshabilitados con estilo de solo lectura */
+.mat-mdc-form-field input[readonly],
+.mat-mdc-form-field textarea[readonly] {
+  color: #666;
+  background-color: #f9f9f9;
+  cursor: default;
+}
+
+/* Asegurar que los form-fields ocupen todo el ancho */
+.mat-mdc-form-field {
+  width: 100%;
+  margin-bottom: 1rem;
+}

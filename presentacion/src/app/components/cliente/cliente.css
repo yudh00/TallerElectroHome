@@ -1,0 +1,9 @@
+.tituloC {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: white;
+  font-weight: 800;
+  font-size: 1.5rem;
+}

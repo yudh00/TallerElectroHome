@@ -1,0 +1,165 @@
+<mat-card>
+  <div class="p-6 bg-gray-200 border rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+    <mat-card-header class="bg-blue-950 h-15 flex justify-center">
+      <mat-card-title class="tituloC">
+        <mat-icon>assignment</mat-icon> Gestión de Casos
+      </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title (click)="togglePanel(); limpiar();">
+            Filtrar - Click para {{panelOpenState() ? 'Cerrar' : 'Abrir'}}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <mat-form-field>
+          <mat-label>Cliente</mat-label>
+          <input matInput #fcliente id="fcliente" 
+                 [value]="srvAuth.userActualS().rol === Role.Cliente ? srvAuth.userActualS().idUsuario : ''"
+                 [readonly]="srvAuth.userActualS().rol === Role.Cliente"
+                 (keyup)="onFiltroChange({
+                   cliente: fcliente.value,
+                   tecnico: ftecnico.value,
+                   marca: fmarca.value,
+                   modelo: fmodelo.value,
+                   descripcion: fdescripcion.value
+                 });" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Técnico</mat-label>
+          <input matInput #ftecnico id="ftecnico" (keyup)="onFiltroChange({
+            cliente: fcliente.value,
+            tecnico: ftecnico.value,
+            marca: fmarca.value,
+            modelo: fmodelo.value,
+            descripcion: fdescripcion.value
+          });" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Marca Artefacto</mat-label>
+          <input matInput #fmarca id="fmarca" (keyup)="onFiltroChange({
+            cliente: fcliente.value,
+            tecnico: ftecnico.value,
+            marca: fmarca.value,
+            modelo: fmodelo.value,
+            descripcion: fdescripcion.value
+          });" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Modelo Artefacto</mat-label>
+          <input matInput #fmodelo id="fmodelo" (keyup)="onFiltroChange({
+            cliente: fcliente.value,
+            tecnico: ftecnico.value,
+            marca: fmarca.value,
+            modelo: fmodelo.value,
+            descripcion: fdescripcion.value
+          });" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Descripción</mat-label>
+          <input matInput #fdescripcion id="fdescripcion" (keyup)="onFiltroChange({
+            cliente: fcliente.value,
+            tecnico: ftecnico.value,
+            marca: fmarca.value,
+            modelo: fmodelo.value,
+            descripcion: fdescripcion.value
+          });" />
+        </mat-form-field>
+      </mat-expansion-panel>
+
+      <table mat-table [dataSource]="dataSource()">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <ng-container matColumnDef="cliente">
+            <th mat-header-cell *matHeaderCellDef>Cliente</th>
+            <td mat-cell *matCellDef="let element">{{element.idCliente}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="tecnico">
+            <th mat-header-cell *matHeaderCellDef>Técnico</th>
+            <td mat-cell *matCellDef="let element">{{element.idTecnico}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="artefacto">
+            <th mat-header-cell *matHeaderCellDef>Artefacto</th>
+            <td mat-cell *matCellDef="let element">
+              <div>
+                <strong>{{element.marcaArtefacto || 'N/A'}} {{element.modeloArtefacto || 'N/A'}}</strong><br>
+                <small class="text-muted">Serie: {{element.serieArtefacto || 'N/A'}}</small>
+              </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <th mat-header-cell *matHeaderCellDef>Descripción</th>
+            <td mat-cell *matCellDef="let element">{{element.descripcion}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaEntrada">
+            <th mat-header-cell *matHeaderCellDef>Fecha Entrada</th>
+            <td mat-cell *matCellDef="let element">{{element.fechaEntrada | date:'dd/MM/yyyy'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaSalida">
+            <th mat-header-cell *matHeaderCellDef>Fecha Salida</th>
+            <td mat-cell *matCellDef="let element">{{element.fechaSalida | date:'dd/MM/yyyy'}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="botonera">
+            <th mat-header-cell *matHeaderCellDef style="text-align: center">
+              @if(srvAuth.userActualS().rol !== Role.Tecnico && srvAuth.userActualS().rol !== Role.Cliente) {
+              <button (click)="onNuevo();"
+                class="text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-0.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <mat-icon>add</mat-icon>
+              </button>
+              }
+            </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="flex content-around">
+                <button (click)="onInfo(element.id)" type="button"
+                  class="flex items-center text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 font-medium rounded-lg text-sm px-3 py-1 mx-2">
+                  <mat-icon>info</mat-icon>
+                </button>
+
+                @if(srvAuth.userActualS().rol !== Role.Cliente) {            
+                <button (click)="onEstado(element.id)" type="button"
+                  class="flex items-center text-white bg-green-600 hover:bg-green-700 focus:ring-4 font-medium rounded-lg text-sm px-3 py-1 mx-2">
+                  <mat-icon>update</mat-icon>
+                </button>
+                }
+                @if(srvAuth.userActualS().rol !== Role.Tecnico && srvAuth.userActualS().rol !== Role.Cliente) {
+                <button (click)="onEditar(element.id)" type="button"
+                  class="flex items-center text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 font-medium rounded-lg text-sm px-3 py-1 mx-2">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                }               
+
+                @if(srvAuth.userActualS().rol === Role.Admin || srvAuth.userActualS().rol === Role.Oficinista ){
+                <button (click)="onEliminar(element.id)" type="button"
+                  class="flex items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 font-medium rounded-lg text-sm px-3 py-1 mx-2">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                }
+              </div>
+            </td>
+          </ng-container>
+        </thead>
+
+        <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+        <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+      </table>
+
+      <mat-paginator #paginator [length]="totalRegistros()" [pageSize]="tamanoPagina" [pageSizeOptions]="opcionesTamano"
+        [showFirstLastButtons]="true" showFirstLastButtons>
+      </mat-paginator>
+    </mat-card-content>
+
+    <mat-card-footer class="bg-gray-200  h-15 flex items-center rounded-lg justify-end ">
+      <button (click)="onImprimir();" matButton="filled"
+        class="!bg-green-800 me-2"><mat-icon>printer</mat-icon>imprimir</button>
+      <button [routerLink]="['/home']" matButton="filled"
+        class="!bg-red-600 me-2"><mat-icon>cancel</mat-icon>cerrar</button>
+    </mat-card-footer>
+  </div>
+</mat-card>

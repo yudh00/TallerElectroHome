@@ -1,0 +1,229 @@
+/* Material Dialog Styling */
+.mat-dialog-content {
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+/* Bootstrap-like utility classes */
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col-md-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+/* Alert styling */
+.alert {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeaa7;
+}
+
+/* Case info styling */
+.caso-info {
+  margin-bottom: 1rem;
+}
+
+.caso-descripcion {
+  background-color: #f8f9fa;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border-left: 4px solid #007bff;
+  margin: 0;
+}
+
+/* Timeline styling */
+.historial-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.historial-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.historial-container::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.historial-container::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.historial-container::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Timeline */
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background-color: #e9ecef;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.timeline-item-last {
+  margin-bottom: 0;
+}
+
+.timeline-item-last::after {
+  display: none;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: -38px;
+  top: 5px;
+  z-index: 2;
+}
+
+.timeline-content {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 3px solid #e9ecef;
+}
+
+.timeline-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.timeline-body {
+  margin-top: 0.5rem;
+}
+
+.timeline-body p {
+  margin-bottom: 0.5rem;
+}
+
+.timeline-body small {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Badge styling */
+.badge {
+  display: inline-block;
+  padding: 0.25em 0.4em;
+  font-size: 0.75em;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.badge-info {
+  background-color: #17a2b8;
+}
+
+.badge-warning {
+  background-color: #ffc107;
+  color: #212529;
+}
+
+.badge-secondary {
+  background-color: #6c757d;
+}
+
+.badge-success {
+  background-color: #28a745;
+}
+
+.badge-primary {
+  background-color: #007bff;
+}
+
+.badge-light {
+  background-color: #f8f9fa;
+  color: #6c757d;
+}
+
+/* Material Icon adjustments */
+mat-icon {
+  vertical-align: middle;
+}
+
+/* Small text styling */
+small {
+  font-size: 0.875em;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

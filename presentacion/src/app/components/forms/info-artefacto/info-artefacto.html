@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ titulo }}</h2>
+<mat-dialog-content>
+  <form id="FormularioInfoArtefacto" [formGroup]="form">
+    <div class="flex flex-col">
+      <mat-form-field>
+        <mat-label>Cliente</mat-label>
+        <input formControlName="idCliente" type="text" matInput readonly />
+      </mat-form-field>
+      
+      <div class="md:flex justify-between">
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Serie</mat-label>
+          <input formControlName="serie" type="text" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Marca</mat-label>
+          <input formControlName="marca" type="text" matInput readonly />
+        </mat-form-field>
+        <mat-form-field class="w-full md:w-fit">
+          <mat-label>Modelo</mat-label>
+          <input formControlName="modelo" type="text" matInput readonly />
+        </mat-form-field>
+      </div>
+      
+      <mat-form-field class="w-full md:w-fit">
+        <mat-label>Categoría</mat-label>
+        <input formControlName="categoria" type="text" matInput readonly />
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-label>Descripción</mat-label>
+        <textarea formControlName="descripcion" matInput readonly></textarea>
+      </mat-form-field>
+    </div>
+    <input type="hidden" formControlName="id" />
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions class="flex justify-end">
+  <button mat-raised-button color="primary" (click)="onCerrar()">
+    <mat-icon>close</mat-icon> 
+    Cerrar
+  </button>
+</mat-dialog-actions>
