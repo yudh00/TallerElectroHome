@@ -6,55 +6,49 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 class Artefacto extends BaseController
 {
+    private const ENDPOINT = '/artefacto';
+
     public function listar(Request $request, Response $response, $args)
     {
-        $result = $this->makeRequest('GET', '/artefacto/listar');
-        return $this->sendResponse($response, $result);
+        $url = self::ENDPOINT . '/listar';
+        return $this->forwardRequest($request, $response, $url);
     }
 
     public function read(Request $request, Response $response, $args)
     {
-        $id = $args['id'] ?? '';
-        $endpoint = '/artefacto/read' . ($id ? '/' . $id : '');
-        $result = $this->makeRequest('GET', $endpoint);
-        return $this->sendResponse($response, $result);
+        $url = self::ENDPOINT . '/read';
+        if (isset($args['id'])) {
+            $url .= '/' . $args['id'];
+        }
+        return $this->forwardRequest($request, $response, $url);
     }
 
     public function buscar(Request $request, Response $response, $args)
     {
-        $id = $args['id'];
-        $result = $this->makeRequest('GET', '/artefacto/' . $id);
-        return $this->sendResponse($response, $result);
+        $url = self::ENDPOINT . '/' . $args['id'];
+        return $this->forwardRequest($request, $response, $url);
     }
 
     public function create(Request $request, Response $response, $args)
     {
-        $data = json_decode($request->getBody(), true);
-        $result = $this->makeRequest('POST', '/artefacto', $data);
-        return $this->sendResponse($response, $result);
+        return $this->forwardRequest($request, $response, self::ENDPOINT);
     }
 
     public function update(Request $request, Response $response, $args)
     {
-        $id = $args['id'];
-        $data = json_decode($request->getBody(), true);
-        $result = $this->makeRequest('PUT', '/artefacto/' . $id, $data);
-        return $this->sendResponse($response, $result);
+        $url = self::ENDPOINT . '/' . $args['id'];
+        return $this->forwardRequest($request, $response, $url);
     }
 
     public function delete(Request $request, Response $response, $args)
     {
-        $id = $args['id'];
-        $result = $this->makeRequest('DELETE', '/artefacto/' . $id);
-        return $this->sendResponse($response, $result);
+        $url = self::ENDPOINT . '/' . $args['id'];
+        return $this->forwardRequest($request, $response, $url);
     }
 
     public function filtrar(Request $request, Response $response, $args)
     {
-        $pag = $args['pag'];
-        $lim = $args['lim'];
-        $queryParams = $request->getQueryParams();
-        $result = $this->makeRequest('GET', '/artefacto/filtrar/' . $pag . '/' . $lim, null, $queryParams);
-        return $this->sendResponse($response, $result);
+        $url = self::ENDPOINT . '/filtrar/' . $args['pag'] . '/' . $args['lim'];
+        return $this->forwardRequest($request, $response, $url);
     }
 }

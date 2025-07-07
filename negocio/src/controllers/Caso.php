@@ -18,16 +18,12 @@ class Caso extends BaseController
     public function filtrar(Request $request, Response $response, $args)
     {
         $url = self::ENDPOINT . '/filtrar/' . $args['pag'] . '/' . $args['lim'];
-        $queryString = $this->buildQueryString($request->getQueryParams());
-        $url .= $queryString;
         return $this->forwardRequest($request, $response, $url);
     }
 
     public function numRegs(Request $request, Response $response, $args)
     {
         $url = self::ENDPOINT . '/numRegs';
-        $queryString = $this->buildQueryString($request->getQueryParams());
-        $url .= $queryString;
         return $this->forwardRequest($request, $response, $url);
     }
 

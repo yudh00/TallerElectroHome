@@ -8,7 +8,7 @@ abstract class BaseController
 {
     protected $dataServiceUrl = 'http://web_datos:80/api';
 
-    protected function makeRequest($method, $endpoint, $data = null, $queryParams = [])
+    protected function makeRequest($method, $endpoint, $data = null, $queryParams = [], $headers = [])
     {
         $url = $this->dataServiceUrl . $endpoint;
         
@@ -23,10 +23,16 @@ abstract class BaseController
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        
+        // Headers por defecto
+        $defaultHeaders = [
             'Content-Type: application/json',
             'Accept: application/json'
-        ]);
+        ];
+        
+        // Combinar headers por defecto con los headers pasados
+        $allHeaders = array_merge($defaultHeaders, $headers);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $allHeaders);
 
         switch (strtoupper($method)) {
             case 'POST':
@@ -99,7 +105,64 @@ abstract class BaseController
             $data = json_decode($body, true);
         }
         
-        $result = $this->makeRequest($method, $endpoint, $data);
+        // Extraer headers importantes del request original
+        $headers = [];
+        
+        // Transmitir header de autorización si existe
+        if ($request->hasHeader('Authorization')) {
+            $headers[] = 'Authorization: ' . $request->getHeaderLine('Authorization');
+        }
+        
+        // Transmitir header de token JWT si existe (alternativo)
+        if ($request->hasHeader('jwt')) {
+            $headers[] = 'jwt: ' . $request->getHeaderLine('jwt');
+        }
+        
+        // Transmitir otros headers importantes
+        $importantHeaders = ['X-API-KEY', 'X-Requested-With', 'X-CSRF-Token', 'token', 'Token', 'JWT'];
+        foreach ($importantHeaders as $headerName) {
+            if ($request->hasHeader($headerName)) {
+                $headers[] = $headerName . ': ' . $request->getHeaderLine($headerName);
+            }
+        }
+        
+        // Obtener query parameters del request original
+        $queryParams = $request->getQueryParams();
+        
+        $result = $this->makeRequest($method, $endpoint, $data, $queryParams, $headers);
+        return $this->sendResponse($response, $result);
+    }
+
+    protected function forwardRequestWithQueryParams(Request $request, Response $response, $endpoint, $additionalParams = [])
+    {
+        $method = $request->getMethod();
+        $data = null;
+        
+        if (in_array($method, ['POST', 'PUT', 'PATCH'])) {
+            $body = $request->getBody()->getContents();
+            $data = json_decode($body, true);
+        }
+        
+        // Extraer headers importantes del request original
+        $headers = [];
+        
+        // Transmitir header de autorización si existe
+        if ($request->hasHeader('Authorization')) {
+            $headers[] = 'Authorization: ' . $request->getHeaderLine('Authorization');
+        }
+        
+        // Transmitir otros headers importantes
+        $importantHeaders = ['X-API-KEY', 'X-Requested-With', 'X-CSRF-Token'];
+        foreach ($importantHeaders as $headerName) {
+            if ($request->hasHeader($headerName)) {
+                $headers[] = $headerName . ': ' . $request->getHeaderLine($headerName);
+            }
+        }
+        
+        // Combinar query parameters del request con parámetros adicionales
+        $queryParams = array_merge($request->getQueryParams(), $additionalParams);
+        
+        $result = $this->makeRequest($method, $endpoint, $data, $queryParams, $headers);
         return $this->sendResponse($response, $result);
     }
 
