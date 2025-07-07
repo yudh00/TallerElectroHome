@@ -6,8 +6,7 @@
     use Slim\Routing\RouteCollectorProxy;
 
     $app->get('/', function (Request $request, Response $response, $args) {
-        $response->getBody()->write("Capa de Negocio - API Gateway");
-        return $response;
+        
     });
 
     $app->group('/api',function(RouteCollectorProxy $api){
